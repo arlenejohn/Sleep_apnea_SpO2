@@ -119,22 +119,22 @@ for l=1:length(list_string)
     idxTest=test(c);
     test_list=total_features(idxTest,:);
     class_test=labels(idxTest);
-    save(fullfile(folder,strcat(list_string{l},'_test_labels.mat')),'class_test');
+    save(strcat(list_string{l},'_test_labels.mat'),'class_test');
     clear class_test
     ecg_test=test_list(:,1:1408);
-    save(fullfile(folder,(strcat(list_string{l},'_ecg_test.mat')),'ecg_test');
+    save(strcat(list_string{l},'_ecg_test.mat'),'ecg_test');
     clear ecg_test
     spo2_test=test_list(:,1409:2816);
-    save(fullfile(folder,(strcat(list_string{l},'_spo2_test.mat')),'spo2_test');
+    save(strcat(list_string{l},'_spo2_test.mat'),'spo2_test');
     clear spo2_test
     sum_mov_test=test_list(:,2817:4224);
-    save(fullfile(folder,(strcat(list_string{l},'_sum_mov_test.mat')),'sum_mov_test');
+    save(strcat(list_string{l},'_sum_mov_test.mat'),'sum_mov_test');
     clear sum_mov_test
     ribcage_test=test_list(:,4225:5632);
-    save(fullfile(folder,(strcat(list_string{l},'_ribcage_test.mat')),'ribcage_test');
+    save(strcat(list_string{l},'_ribcage_test.mat'),'ribcage_test');
     clear ribcage_test
     abdo_test=test_list(:,5633:7040);
-    save(fullfile(folder,(strcat(list_string{l},'_abdo_test.mat')),'abdo_test');
+    save(strcat(list_string{l},'_abdo_test.mat'),'abdo_test');
     clear abdo_test
     clear test_list
     
