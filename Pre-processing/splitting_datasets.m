@@ -9,8 +9,13 @@ for l=1:length(list_string)
     ecg=signal(:,1);
     ecg=(ecg-mean(ecg))/std(ecg);
     spo2=signal(:,2);
-    spo2=(spo2-mean(spo2))/std(spo2);
-    
+    %spo2=(spo2-mean(spo2))/std(spo2);
+    sum_mov=signal(:,3);
+    sum_mov=(sum_mov-mean(sum_mov))/std(sum_mov);
+    ribcage=signal(:,4);
+    ribcage=(ribcage-mean(ribcage))/std(ribcage);
+    abdo=signal(:,5);
+    abdo=(abdo-mean(abdo))/std(abdo);
     load(strcat(list_string{l},'_label.mat'));
     labels=labels(1:length(labels)-11);
     
@@ -36,11 +41,48 @@ for l=1:length(list_string)
         i=i+128;
     end
     
+    sum_mov_features=zeros(round(length(sum_mov)/128)-11,1408);
+    i = 129;
+    k=1;
+    while i < length(sum_mov)-1279
+        feature_window=sum_mov(i-128: i+1279);
+        feature_window=feature_window';
+        sum_mov_features(k,:)=feature_window;
+        k=k+1;
+        i=i+128;
+    end
     
+    ribcage_features=zeros(round(length(ribcage)/128)-11,1408);
+    i = 129;
+    k=1;
+    while i < length(ribcage)-1279
+        feature_window=ribcage(i-128: i+1279);
+        feature_window=feature_window';
+        ribcage_features(k,:)=feature_window;
+        k=k+1;
+        i=i+128;
+    end
+    
+    abdo_features=zeros(round(length(abdo)/128)-11,1408);
+    i = 129;
+    k=1;
+    while i < length(abdo)-1279
+        feature_window=abdo(i-128: i+1279);
+        feature_window=feature_window';
+        abdo_features(k,:)=feature_window;
+        k=k+1;
+        i=i+128;
+    end
     
      
+    clear ecg
+    clear spo2
+    clear ribcage
+    clear sum_mov
+    clear abdo
+    clear signal
     
-    total_features=[ecg_features spo2_features];
+    total_features=[ecg_features spo2_features sum_mov_features ribcage_features abdo_features];
     spo2_rows=total_features(:,1409:2816);
     idx=[];
     for k=1:length(spo2_rows)
@@ -59,9 +101,14 @@ for l=1:length(list_string)
     end
     labels=labe;
     total_features=write_val;
+    spo2_rows=(total_features(:,1409:2816)-mean(total_features(:,1409:2816)))/std(total_features(:,1409:2816));
+    total_features(:,1409:2816)=spo2_rows;
         
     clear ecg_features
     clear spo2_features
+    clear sum_mov_features
+    clear ribcage_features
+    clear abdo_features
     clear spo2_rows
     clear labe
     clear write_val
@@ -80,6 +127,15 @@ for l=1:length(list_string)
     spo2_test=test_list(:,1409:2816);
     save(fullfile(folder,(strcat(list_string{l},'_spo2_test.mat')),'spo2_test');
     clear spo2_test
+    sum_mov_test=test_list(:,2817:4224);
+    save(fullfile(folder,(strcat(list_string{l},'_sum_mov_test.mat')),'sum_mov_test');
+    clear sum_mov_test
+    ribcage_test=test_list(:,4225:5632);
+    save(fullfile(folder,(strcat(list_string{l},'_ribcage_test.mat')),'ribcage_test');
+    clear ribcage_test
+    abdo_test=test_list(:,5633:7040);
+    save(fullfile(folder,(strcat(list_string{l},'_abdo_test.mat')),'abdo_test');
+    clear abdo_test
     clear test_list
     
     train_valid_list=total_features(idxTrain,:);
@@ -134,6 +190,15 @@ for l=1:length(list_string)
     spo2_train=train_list(:,1409:2816);
     save(strcat(list_string{l},'_spo2_train.mat'),'spo2_train');
     clear spo2_train
+    sum_mov_train=train_list(:,2817:4224);
+    save(strcat(list_string{l},'_sum_mov_train.mat'),'sum_mov_train');
+    clear sum_mov_train
+    ribcage_train=train_list(:,4225:5632);
+    save(strcat(list_string{l},'_ribcage_train.mat'),'ribcage_train');
+    clear ribcage_train
+    abdo_train=train_list(:,5633:7040);
+    save(strcat(list_string{l},'_abdo_train.mat'),'abdo_train');
+    clear abdo_train
     clear train_list
     clear idxTrain
     
@@ -174,6 +239,15 @@ for l=1:length(list_string)
     spo2_valid=valid_list(:,1409:2816);
     save(strcat(list_string{l},'_spo2_valid.mat'),'spo2_valid');
     clear spo2_valid
+    sum_mov_valid=valid_list(:,2817:4224);
+    save(strcat(list_string{l},'_sum_mov_valid.mat'),'sum_mov_valid');
+    clear sum_mov_valid
+    ribcage_valid=valid_list(:,4225:5632);
+    save(strcat(list_string{l},'_ribcage_valid.mat'),'ribcage_valid');
+    clear ribcage_valid
+    abdo_valid=valid_list(:,5633:7040);
+    save(strcat(list_string{l},'_abdo_valid.mat'),'abdo_valid');
+    clear abdo_valid
     clear valid_list
     clear idxValid
     
