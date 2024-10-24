@@ -4,6 +4,5 @@ A. John, K. K. Nundy, B. Cardiff and D. John, "SomnNET: An SpO2 Based Deep Learn
 
 Code for Model1 and pruned models in the article is shared in the jupyter noebook sleep_apnea_spo2.ipynb. Code for binarized model Model3 shared in jupyter notebook Binary_spo2.ipynb. Binary_spo2.ipynb uses the binarized layer implementations from https://github.com/DingKe/nn_playground/tree/master/binarynet
 
-The raw data and processed data is hosted on https://drive.google.com/drive/folders/12bksbKpkro5s4RljIe8nF1gbC0Dl-d3Z?usp=sharing. Please request access.
-
+The google drive at which the raw and processed data was hosted has expired. New location will be updated here soon.
 
